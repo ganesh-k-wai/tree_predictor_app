@@ -7,149 +7,10 @@
     <title>Tree Predictor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-toastify@9.1.3/dist/react-toastify.min.css" />
-    <style>
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #f8ffae 0%, #43cea2 100%);
-        }
+    
+     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-        .card {
-            border-radius: 24px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-            background: rgba(255, 255, 255, 0.92);
-        }
-
-        .avatar {
-            width: 310px;
-            height: 310px;
-            border-radius: 50%;
-            margin: 0 auto 18px auto;
-            display: block;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
-            border: 4px solid #fff;
-            background: linear-gradient(135deg, #f8ffae 0%, #43cea2 100%);
-            object-fit: cover;
-        }
-
-        .custom-file-input {
-            display: none;
-        }
-
-        .custom-file-label {
-            display: block;
-            width: 100%;
-            padding: 1rem 1.2rem;
-            background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%);
-            color: #333;
-            border-radius: 14px;
-            border: 2px dashed #a6c1ee;
-            cursor: pointer;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: background 0.2s, color 0.2s;
-            margin-bottom: 0.5rem;
-        }
-
-        .custom-file-label:hover {
-            background: linear-gradient(90deg, #a6c1ee 0%, #fbc2eb 100%);
-            color: #222;
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
-            border: none;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 8px rgba(67, 206, 162, 0.12);
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
-        }
-
-        .result-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 24px;
-        }
-
-        .blur-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.38);
-            z-index: 1050;
-            backdrop-filter: blur(4px);
-            display: none;
-        }
-
-        .center-spinner {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1060;
-            display: none;
-        }
-
-        .modal-content {
-            border-radius: 18px;
-        }
-
-        /* Spinner dots */
-        .dot-spinner {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 60px;
-        }
-
-        .dot-spinner__dot {
-            width: 16px;
-            height: 16px;
-            margin: 0 6px;
-            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
-            border-radius: 50%;
-            animation: dotSpinner 1.2s infinite cubic-bezier(.6, 0, .4, 1);
-        }
-
-        .dot-spinner__dot:nth-child(2) {
-            animation-delay: 0.15s;
-        }
-
-        .dot-spinner__dot:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .dot-spinner__dot:nth-child(4) {
-            animation-delay: 0.45s;
-        }
-
-        .dot-spinner__dot:nth-child(5) {
-            animation-delay: 0.6s;
-        }
-
-        @keyframes dotSpinner {
-
-            0%,
-            100% {
-                opacity: 0.3;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.4);
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -171,19 +32,29 @@
                     <h2 class="text-center mb-2"
                         style="font-weight:700;letter-spacing:1px;background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
                         Tree Predictor</h2>
-                    <img id="avatar-img" src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Tree Avatar"
-                        class="avatar">
+                    <img id="avatar-img" src="https://static.vecteezy.com/system/resources/previews/011/473/420/non_2x/human-tree-logo-design-leader-education-logo-design-free-vector.jpg" alt="Tree Avatar"
+                        class="avatar shadow-lg">
+                        
                     <form id="upload-form">
-                        <div class="mb-3">
-                            <input class="custom-file-input" type="file" id="image" name="image" accept="image/*"
-                                required>
-                            <label for="image" class="custom-file-label" id="file-label">Choose an image of a
-                                tree</label>
+                        <div class="mb-3 position-relative" style="height: 48px;">
+                            <input class="custom-file-input" type="file" id="image" name="image" accept="image/*" style="opacity:0;position:absolute;width:100%;height:100%;left:0;top:0;z-index:2;cursor:pointer;">
+                            <label for="image" class="custom-file-label p-0" id="file-label" style="position:relative;z-index:1;"><i class="bi bi-cloud-arrow-up fs-1 fw-bold "></i></label>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Predict</button>
+                        <button type="submit" class="btn btn-primary w-100 my-2 py-3 mt-3">Predict</button>
                     </form>
                     <div class="result" id="result"></div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap Toast Container -->
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+        <div id="liveToast" class="toast align-items-center text-bg-danger border-0 text-white" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMsg">
+                    <!-- Toast message will appear here -->
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>
@@ -202,13 +73,11 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react-toastify@9.1.3/dist/react-toastify.umd.min.js"></script>
     <script>
         $(function () {
             // Custom file input label
             $('#image').on('change', function () {
-                let fileName = this.files[0] ? this.files[0].name : 'Choose an image of a tree';
-                $('#file-label').text(fileName);
+                // Only show the icon, do not update label text
                 // Show preview on avatar
                 if (this.files && this.files[0]) {
                     let reader = new FileReader();
@@ -229,19 +98,9 @@
                 var formData = new FormData(this);
                 // Check if file is selected
                 if (!$('#image')[0].files.length) {
-                    if (window.ReactToastify) {
-                        ReactToastify.toast.error('Please upload an image before predicting!', {
-                            position: 'top-right',
-                            autoClose: 3000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                    } else {
-                        alert('Please upload an image before predicting!');
-                    }
+                    $('#toastMsg').text('Please choose a file first!');
+                    var toast = new bootstrap.Toast(document.getElementById('liveToast'));
+                    toast.show();
                     return;
                 }
                 $('#center-spinner').show();
@@ -257,15 +116,30 @@
                         $('#center-spinner').hide();
                         $('#blur-overlay').hide();
                         if (data.predictions && data.predictions.length > 0) {
-                            let main = data.predictions[0].tagName;
-                            let percent = (data.predictions[0].probability * 100).toFixed(2);
-                            let html = `<div class='result-row'><span class='fs-4 fw-bold text-success'>${main}</span> <span class='badge bg-info ms-2' style='font-size:1.1rem;'></span> <button class='btn btn-outline-primary ms-3' id='showFinalBtn'>Final Result</button></div>`;
-                            $('#result').html(html);
-                            $(document).off('click', '#showFinalBtn').on('click', '#showFinalBtn', function () {
-                                $('#modalResultText').html(`<span class='text-success'>${main}</span><br/><span class='badge bg-info mt-2' style='font-size:1.2rem;'>${percent}%</span>`);
-                                var modal = new bootstrap.Modal(document.getElementById('resultModal'));
-                                modal.show();
-                            });
+                            // Normalize allowed tree names
+                            const allowedTrees = ['maple', 'coconut', 'pine', 'banyan', 'banana'];
+                            const threshold = 70; // percent
+                            // Find the best matching allowed tree above threshold
+                            let found = null;
+                            for (let pred of data.predictions) {
+                                let tag = pred.tagName.toLowerCase().replace(/ tree$/, '').trim();
+                                let percent = (pred.probability * 100);
+                                if (allowedTrees.includes(tag) && percent >= threshold) {
+                                    found = { tag: pred.tagName, percent: percent.toFixed(2) };
+                                    break;
+                                }
+                            }
+                            if (found) {
+                                let html = `<div class='result-row'><span class='fs-4 fw-bold text-success'>${found.tag}</span> <span class='badge bg-info ms-2' style='font-size:1.1rem;'></span> <button class='btn btn-outline-primary ms-3' id='showFinalBtn'>Final Result</button></div>`;
+                                $('#result').html(html);
+                                $(document).off('click', '#showFinalBtn').on('click', '#showFinalBtn', function () {
+                                    $('#modalResultText').html(`<span class='text-success'>${found.tag}</span><br/><span class='badge bg-info mt-2' style='font-size:1.2rem;'>${found.percent}%</span>`);
+                                    var modal = new bootstrap.Modal(document.getElementById('resultModal'));
+                                    modal.show();
+                                });
+                            } else {
+                                $('#result').html('<div class="alert alert-warning">No matching tree found or confidence is too low. Please upload a clear image of a supported tree (Maple, Coconut, Pine, Banyan, Banana).</div>');
+                            }
                         } else if (data.error) {
                             $('#result').html('<div class="alert alert-danger">' + data.error + '</div>');
                         }
